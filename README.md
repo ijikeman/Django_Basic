@@ -1,0 +1,2 @@
+# Django_Basic
+Djangoの理解の為の基本セットを用意しておく
