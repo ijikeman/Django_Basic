@@ -1,0 +1,9 @@
+{
+	"name": "Existing Docker Compose",
+	"dockerComposeFile": [
+		"../compose.yml"
+	],
+	"service": "django",
+	"workspaceFolder": "/workspace/",
+	"forwardPorts": [8000]
+}
