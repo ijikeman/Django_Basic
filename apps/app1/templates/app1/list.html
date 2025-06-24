@@ -3,7 +3,7 @@
     {% for record in records %}
         <li>
             {{ record.name }} - {{ record.email }} - {{ record.address }}
-            <a href="{% url 'delete_record' pk=record.pk %}">削除</a>
+            <a href="{% url 'app1:delete_record' pk=record.pk %}">削除</a>
         </li>
     {% endfor %}
 </ul>
