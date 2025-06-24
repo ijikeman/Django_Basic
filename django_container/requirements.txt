@@ -1,8 +1,1 @@
 django==5.1.8
-pdfplumber
-PyPDF2
-pdfplumber
-pytesseract
-pdf2image
-mysqlclient
-python-magic
