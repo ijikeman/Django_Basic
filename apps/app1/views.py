@@ -1,18 +1,18 @@
-from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
-from .forms import MyForm
-from .models import MyModel
-from django.urls import reverse_lazy
+from .forms import MyForm # forms.pyのMyFormクラスを利用
+from .models import MyModel # models.pyのMyModelクラスを利用
+from django.views.generic import TemplateView # TemplateViewを継承してviewをクラス形式に変更
 
+# 関数型
 def create_record(request):
     if request.method == "POST":
-        form = MyForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("app1:list_records")
+        form = MyForm(request.POST) # formのデータを取り込み
+        if form.is_valid(): # .is_valid標準関数
+            form.save() # .save標準関数
+            return redirect("app1:list_records") # app1/urls.pyのname=list_recordsへ飛ぶ
     else:
-        form = MyForm()
-    return render(request, "app1/create.html", {"form": form})
+        form = MyForm() # MyFormのフォームを取り込む
+    return render(request, "app1/create.html", {"form": form}) # formを渡してrenderingする
 
 # def list_records(request):
 #     records = MyModel.objects.all()
@@ -22,9 +22,9 @@ def create_record(request):
 class ListRecordsView(TemplateView):
     template_name = "app1/list.html"
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['records'] = MyModel.objects.all()
-        return context
+        context = super().get_context_data(**kwargs) # 親クラスのget_context_dataを呼び出し、基本のコンテキストを取得
+        context['records'] = MyModel.objects.all() # recordsというキーでMyModelの全オブジェクトをコンテキストに追加
+        return context # コンテキストを返す
 
 def delete_record(request, pk):
     record = MyModel.objects.get(pk=pk)
