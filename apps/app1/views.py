@@ -30,3 +30,8 @@ def delete_record(request, pk):
     record = MyModel.objects.get(pk=pk)
     record.delete()
     return redirect("app1:list_records")
+
+def check_records(request):
+    selected_records = request.POST.getlist('selected_records')
+    selected_objects = MyModel.objects.filter(pk__in=selected_records)
+    return render(request, 'app1/check.html', {'selected_records': selected_objects})

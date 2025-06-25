@@ -1,9 +1,28 @@
-<h1>レコード一覧</h1>
-<ul>
-    {% for record in records %}
-        <li>
-            {{ record.name }} - {{ record.email }} - {{ record.address }}
-            <a href="{% url 'app1:delete_record' pk=record.pk %}">削除</a>
-        </li>
-    {% endfor %}
-</ul>
+{% extends 'app1/base.html' %}
+
+{% block content %}
+<form method="post" action="{% url 'app1:check' %}">
+    {% csrf_token %}
+    <table>
+        <thead>
+            <tr>
+                <th><input type="checkbox"> Select All</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td><input type="checkbox" name="selected_records" value="{{ record.pk }}"></td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.email }}</td>
+                    <td>{{ record.address }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
