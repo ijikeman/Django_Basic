@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import MyForm # forms.pyのMyFormクラスを利用
 from .models import MyModel # models.pyのMyModelクラスを利用
 from django.views.generic import TemplateView # TemplateViewを継承してviewをクラス形式に変更
+from modules.email_utils import EmailUtils
 
 # 関数型
 def create_record(request):

@@ -1,4 +1,5 @@
 {% extends 'app1/base.html' %}
+{% load app1_extras %}
 
 {% block content %}
 <h1>選択されたレコード</h1>
@@ -7,6 +8,7 @@
         <li>
             Name: {{ record.name }}<br>
             Email: {{ record.email }}<br>
+            Domain: {{ record.email|extract_domain }}<br>
             Address: {{ record.address }}
         </li>
     {% endfor %}

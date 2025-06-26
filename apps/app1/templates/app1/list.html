@@ -1,12 +1,45 @@
 {% extends 'app1/base.html' %}
 
 {% block content %}
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectAllCheckbox = document.getElementById('select-all');
+        const recordCheckboxes = document.querySelectorAll('input[name="selected_records"]');
+
+        // 「Select All」チェックボックスがクリックされたときの処理
+        selectAllCheckbox.addEventListener('click', function(event) {
+            recordCheckboxes.forEach(checkbox => {
+                checkbox.checked = event.target.checked;
+            });
+        });
+
+        // 個別のチェックボックスがクリックされたときの処理
+        recordCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', () => {
+                selectAllCheckbox.checked = Array.from(recordCheckboxes).every(cb => cb.checked);
+            });
+        });
+    });
+</script>
+
 <form method="post" action="{% url 'app1:check' %}">
     {% csrf_token %}
     <table>
         <thead>
             <tr>
-                <th><input type="checkbox"> Select All</th>
+                <th><input type="checkbox" id="select-all"> Select All</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Address</th>
