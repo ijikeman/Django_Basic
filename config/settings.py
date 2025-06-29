@@ -10,23 +10,28 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-h%pyo)siihf8ir%5sc6ih^-r23u7p2+fv(%_h)o!84&(r5zkxr"
+# It is strongly recommended to load the secret key from an environment variable.
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-h%pyo)siihf8ir%5sc6ih^-r23u7p2+fv(%_h)o!84&(r5zkxr')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# In production, this should always be False.
+# The value is read from an environment variable, defaulting to True for development.
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://localhost']
+# In production, set this to your site's domain(s) to prevent Host header attacks.
+# Using '*' is a security risk.
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['http://localhost', 'http://127.0.0.1']
 
 # Application definition
 
@@ -37,7 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.app1"
+    "apps.app1",
+    "apps.auth.apps.AuthConfig",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +61,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -122,3 +128,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = '/app1/list/' # ログイン後のリダイレクト先
+LOGOUT_REDIRECT_URL = '/auth/login/' # ログアウト後のリダイレクト先
+LOGIN_URL = '/auth/login/' # ログインページのURL

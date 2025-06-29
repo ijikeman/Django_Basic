@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Django App</title>
+</head>
+<body>
+    <header>
+        <h1>My Application</h1>
+        <nav>
+            {% if user.is_authenticated %}
+                <span>こんにちは、{{ user.username }}さん</span>
+                <form action="{% url 'authentication:logout' %}" method="post" style="display: inline; margin-left: 1em;">
+                    {% csrf_token %}
+                    <button type="submit">ログアウト</button>
+                </form>
+            {% else %}
+                <a href="{% url 'authentication:login' %}">ログイン</a>
+                <a href="{% url 'authentication:register' %}">登録</a>
+            {% endif %}
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p>&copy; 2025 My Company</p>
+    </footer>
+</body>
+</html>
